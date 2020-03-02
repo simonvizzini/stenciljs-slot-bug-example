@@ -23,8 +23,7 @@ export class MyComponent implements ComponentInterface, ComponentDidUnload {
     });
     observer.observe(this.containerRef, {
       childList: true,
-      subtree: true,
-      attributes: true
+      subtree: true
     });
     this.mutationObserver = observer;
   }
@@ -34,25 +33,27 @@ export class MyComponent implements ComponentInterface, ComponentDidUnload {
   }
 
   @State() count: number = 0;
-  private increase = () => {
+  private handleClick = () => {
     this.count += 1;
   };
 
   render() {
+    const yellowBg = this.count % 2 === 0;
+
     return (
       <div ref={ref => (this.containerRef = ref)}>
-        <button type="button" onClick={this.increase}>
+        <button type="button" onClick={this.handleClick}>
           Increase
         </button>
         {this.useWrapperTwo ? (
           <my-wrapper-two>
-            <div>
+            <div class={{ content: true, alternate: yellowBg }}>
               Count: (<span>{this.count}</span>)
             </div>
           </my-wrapper-two>
         ) : (
           <my-wrapper-one>
-            <div>
+            <div class={{ content: true, alternate: yellowBg }}>
               Count: (<span>{this.count}</span>)
             </div>
           </my-wrapper-one>
